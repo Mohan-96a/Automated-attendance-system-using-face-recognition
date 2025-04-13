@@ -24,14 +24,14 @@ A sophisticated attendance management system using facial recognition technology
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/Mohan-96a/Automated-attendance-system-using-face-recognition.git
-   ```
+```bash
+git clone <repository-url>
+```
 
 2. Install the required dependencies:
-   ```bash
-   pip install opencv-python numpy pandas face_recognition
-   ```
+```bash
+pip install opencv-python numpy pandas face_recognition
+```
 
 3. Configure the student data:
    - Add student images to the designated folder
@@ -45,9 +45,9 @@ A sophisticated attendance management system using facial recognition technology
 ## Usage
 
 1. Run the main script:
-   ```bash
-   python attendance_system.py
-   ```
+```bash
+python attendance_system.py
+```
 
 2. Controls:
    - Press 'd' to display current attendance status
@@ -81,9 +81,9 @@ A sophisticated attendance management system using facial recognition technology
 ```
 attendance_system/
 ├── attendance_system.py    # Main application file
-├── attendance.xlsx         # Attendance records
-├── images/                 # Student images for face recognition
-└── README.md               # Documentation
+├── attendance.xlsx        # Attendance records
+├── images/               # Student images for face recognition
+└── README.md            # Documentation
 ```
 
 ## Configuration
@@ -147,14 +147,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License. See the license file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
 
 - OpenCV team for computer vision capabilities
 - face_recognition library developers
 - Python community for various dependencies
-```
-
----
-
