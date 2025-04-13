@@ -263,4 +263,3 @@ class AttendanceSystem:
 if __name__ == "__main__":
     attendance_system = AttendanceSystem()
     attendance_system.start_recognition()
-#siddhu
