@@ -1,156 +1,248 @@
-# Face Recognition Attendance System
+# SmartAttend AI 🎓
 
-A sophisticated attendance management system using facial recognition technology, built with Python. The system provides real-time face detection, automatic attendance marking, and email notifications for absent students.
+**AI-Powered Smart Attendance Management System**
 
-## Features
+SmartAttend AI is a full-stack intelligent attendance platform that combines **facial recognition**, **anti-spoofing**, and **real-time computer vision** with a modern web application. It automates classroom attendance marking with separate dashboards for administrators, faculty, and students.
 
-- **Real-time Face Recognition**: Uses OpenCV and face_recognition library for accurate face detection and recognition
-- **Distance Optimization**: Provides real-time feedback for optimal camera distance
-- **Automatic Attendance Marking**: Records attendance with timestamps in an Excel sheet
-- **Multiple Face Detection Warning**: Alerts when multiple faces are detected in frame
-- **Email Notifications**: Automatically sends email alerts to absent students
-- **Attendance Status Display**: Shows real-time attendance statistics
-- **Excel Integration**: Maintains attendance records in an organized Excel format
+---
 
-## Prerequisites
+## ✨ Key Features
 
-- Python 3.6+
-- OpenCV (`cv2`)
-- NumPy
-- Pandas
-- face_recognition
-- smtplib (for email notifications)
+| Feature | Description |
+|---|---|
+| 🔍 Face Detection | Real-time multi-face detection with quality & angle assessment |
+| 🧠 ArcFace Recognition | Accurate CPU-optimised face recognition via InsightFace |
+| 🛡️ Anti-Spoofing | Liveness detection — blocks printed photos & screen replays |
+| 📡 Real-Time Streaming | WebSocket-based live camera feed with attendance updates |
+| 🏛️ Role-Based Access | Separate dashboards for Admin, Faculty & Students |
+| 📊 Analytics | Attendance trends, risk predictions, and automated reports |
+| 📄 Report Export | Excel (XLSX) and PDF attendance reports |
+| 🔐 Secure Auth | JWT authentication + PBKDF2 password hashing |
+| 🗄️ Zero-Config DB | Works without MongoDB — built-in JSON fallback engine |
 
-## Installation
+---
 
-1. Clone the repository:
+## 🏗️ Architecture
+
+```
+SmartAttend AI
+├── ai_engine/          # Phase 1: Computer Vision & Face Recognition
+│   ├── config/         # AI thresholds, camera config
+│   ├── detection/      # Face detection, landmarks, quality
+│   ├── recognition/    # ArcFace embeddings, face matching
+│   ├── tracking/       # Cross-frame face tracking
+│   ├── anti_spoofing/  # Liveness detection
+│   ├── enrollment/     # Face registration pipeline
+│   ├── evaluation/     # Benchmark & performance tests
+│   └── engine.py       # Unified inference pipeline
+│
+├── backend/            # Phase 2: FastAPI Backend
+│   └── app/
+│       ├── config.py         # App settings (env-based)
+│       ├── main.py           # FastAPI app entry point
+│       ├── database/         # MongoDB + JSON fallback
+│       ├── routes/           # REST API route handlers
+│       ├── services/         # Business logic layer
+│       ├── schemas/          # Pydantic request/response models
+│       ├── middleware/       # JWT auth, RBAC
+│       └── utils/            # Security utilities
+│
+├── frontend/           # Phase 3: React + Tailwind UI (coming soon)
+├── ml_analytics/       # Phase 4: ML predictions, reports (coming soon)
+├── tests/              # Pytest test suite
+├── docs/               # Documentation
+├── docker/             # Docker configuration (Phase 5)
+├── requirements.txt
+├── .env.example
+└── README.md
+```
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React.js, Tailwind CSS, Shadcn/UI, Recharts |
+| **Backend** | Python FastAPI, Uvicorn |
+| **Face Detection** | OpenCV (Haar + DNN) |
+| **Face Recognition** | InsightFace / ArcFace (ONNX, CPU) |
+| **Anti-Spoofing** | FFT texture analysis, micro-gradient liveness |
+| **Face Tracking** | OpenCV centroid + IoU tracker |
+| **Machine Learning** | Scikit-learn |
+| **Database** | MongoDB (Motor) + JSON fallback engine |
+| **Authentication** | JWT (python-jose), PBKDF2+salt |
+| **Real-Time** | WebSockets (FastAPI native) |
+| **Reports** | OpenPyXL (Excel), ReportLab (PDF) |
+| **Deployment** | Docker, Cloud hosting |
+
+**Hardware:** Intel i5 CPU, 16 GB RAM — **no GPU required**.
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.10+
+- Node.js 18+ (for frontend — Phase 3)
+- MongoDB (optional — JSON fallback works without it)
+
+### 1. Clone & Install
+
 ```bash
-git clone <repository-url>
+git clone https://github.com/Mohan-96a/Automated-attendance-system-using-face-recognition.git
+cd Automated-attendance-system-using-face-recognition
+
+pip install -r requirements.txt
 ```
 
-2. Install the required dependencies:
+### 2. Configure Environment
+
 ```bash
-pip install opencv-python numpy pandas face_recognition
+cp .env.example .env
+# Edit .env — set SECRET_KEY, optionally MONGODB_URI
 ```
 
-3. Configure the student data:
-   - Add student images to the designated folder
-   - Update the `face_data` dictionary with image paths
-   - Update the `students` dictionary with student information
+### 3. Start the Backend
 
-4. Configure email settings:
-   - Update `sender_email` and `sender_password` in the code
-   - Ensure less secure app access is enabled for the sender Gmail account
-
-## Usage
-
-1. Run the main script:
 ```bash
-python attendance_system.py
+# From project root
+uvicorn backend.app.main:app --reload --port 8000
 ```
 
-2. Controls:
-   - Press 'd' to display current attendance status
-   - Press 'q' to quit the application
+The API will auto-seed demo accounts on first run.
 
-## System Components
+### 4. Open API Docs
 
-### 1. Face Recognition
-- Uses the `face_recognition` library for accurate face detection and recognition
-- Compares detected faces with pre-loaded known face encodings
-- Provides real-time feedback on face detection status
+Visit **http://localhost:8000/docs** for the interactive Swagger UI.
 
-### 2. Distance Optimization
-- Calculates optimal distance between camera and subject
-- Provides visual feedback for proper positioning
-- Configurable optimal distance and tolerance settings
+---
 
-### 3. Attendance Management
-- Automatically marks attendance when a face is recognized at optimal distance
-- Records timestamp for each attendance entry
-- Maintains daily attendance records in Excel format
-- Prevents duplicate attendance entries
+## 🔑 Default Demo Credentials
 
-### 4. Email Notifications
-- Automatically sends email notifications to absent students
-- Customizable email templates
-- Secure SMTP integration with Gmail
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@smartattend.ai` | `admin123` |
+| Faculty | `faculty@smartattend.ai` | `faculty123` |
+| Student | `student@smartattend.ai` | `student123` |
 
-## File Structure
+> ⚠️ Change all credentials before any production deployment.
 
+---
+
+## 📡 API Endpoints
+
+### Authentication
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/v1/auth/login` | Login (returns JWT tokens) |
+| POST | `/api/v1/auth/refresh` | Refresh access token |
+| POST | `/api/v1/auth/logout` | Logout |
+| POST | `/api/v1/auth/reset-password` | Request password reset |
+
+### Students
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/v1/students/` | List all students |
+| POST | `/api/v1/students/` | Register student |
+| GET | `/api/v1/students/{id}` | Get student profile |
+| PUT | `/api/v1/students/{id}` | Update student |
+| DELETE | `/api/v1/students/{id}` | Delete student |
+| POST | `/api/v1/students/bulk-import` | Bulk CSV/Excel import |
+| POST | `/api/v1/students/{id}/enroll-face` | Register face biometric |
+
+### Attendance
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/v1/attendance/sessions/` | Create session |
+| POST | `/api/v1/attendance/sessions/{id}/start` | Start session |
+| POST | `/api/v1/attendance/sessions/{id}/stop` | Stop session |
+| POST | `/api/v1/attendance/sessions/{id}/process-frame` | Process camera frame |
+| GET | `/api/v1/attendance/records/` | Attendance history |
+| POST | `/api/v1/attendance/manual` | Manual attendance |
+| WS | `/ws/attendance/{session_id}` | Live WebSocket stream |
+
+### Faculty & Academic
+| Method | Endpoint | Prefix |
+|---|---|---|
+| CRUD | `/api/v1/faculty/` | Faculty management |
+| CRUD | `/api/v1/academic/departments/` | Departments |
+| CRUD | `/api/v1/academic/subjects/` | Subjects |
+| CRUD | `/api/v1/academic/classrooms/` | Classrooms |
+| CRUD | `/api/v1/academic/timetables/` | Timetables |
+
+---
+
+## 🧪 Running Tests
+
+```bash
+# Backend tests (runs with JSON fallback, no MongoDB needed)
+FORCE_JSON_DB=true python -m pytest tests/test_backend.py -v
+
+# AI engine benchmark
+python -m ai_engine.evaluation.evaluate_models
 ```
-attendance_system/
-├── attendance_system.py    # Main application file
-├── attendance.xlsx        # Attendance records
-├── images/               # Student images for face recognition
-└── README.md            # Documentation
-```
 
-## Configuration
+---
 
-### Student Data Structure
-```python
-self.students = {
-    "STUDENT_NAME": {
-        "present": False,
-        "time": None,
-        "email": "student@email.com",
-        "alert_shown": False
-    }
-}
-```
+## 📋 Five-Phase Development Plan
 
-### Face Data Structure
-```python
-self.face_data = {
-    "STUDENT_NAME": "path/to/image.jpg"
-}
-```
+| Phase | Description | Status |
+|---|---|---|
+| **Phase 1** | AI Engine & Computer Vision | ✅ Complete |
+| **Phase 2** | Backend, Database & Authentication | ✅ Complete |
+| **Phase 3** | Full-Stack Frontend & Dashboards | 🔧 In Progress |
+| **Phase 4** | Smart Analytics, ML & Automation | ⏳ Planned |
+| **Phase 5** | Testing, Optimization & Deployment | ⏳ Planned |
 
-## Best Practices
+---
 
-1. **Image Quality**
-   - Use clear, well-lit photos for face recognition
-   - Ensure consistent image size and format
-   - Update face data regularly
+## 🗄️ Database Collections
 
-2. **Environment Setup**
-   - Maintain good lighting conditions
-   - Position camera at eye level
-   - Ensure stable internet connection for email notifications
+| Collection | Purpose |
+|---|---|
+| `users` | User accounts and roles |
+| `students` | Student profiles |
+| `faculty` | Faculty profiles |
+| `departments` | Academic departments |
+| `subjects` | Subject / course records |
+| `classrooms` | Room information |
+| `timetables` | Class schedules |
+| `face_embeddings` | Encrypted biometric templates |
+| `attendance_sessions` | Active and past sessions |
+| `attendance_records` | Individual attendance records |
+| `notifications` | User notifications |
+| `correction_requests` | Attendance dispute requests |
+| `audit_logs` | Full security audit trail |
+| `system_settings` | Application configuration |
 
-3. **Data Management**
-   - Regularly backup attendance records
-   - Maintain student information confidentiality
-   - Update student data promptly
+---
 
-## Troubleshooting
+## 🔒 Security
 
-1. **Camera Issues**
-   - Ensure camera is properly connected
-   - Check camera permissions
-   - Verify camera index in `cv2.VideoCapture()`
+- **Biometric data** is AES-encrypted (Fernet) before storage
+- **Passwords** are hashed with PBKDF2-SHA256 + unique salt
+- **JWT tokens** with configurable expiry and refresh rotation
+- **RBAC** — every endpoint enforces Admin / Faculty / Student roles
+- **Rate limiting** and **input validation** on all API routes
+- **Audit logging** — all sensitive operations are recorded
 
-2. **Face Recognition Problems**
-   - Check image quality and lighting
-   - Verify face data paths
-   - Adjust face recognition tolerance if needed
+---
 
-3. **Email Notification Issues**
-   - Verify email credentials
-   - Check internet connection
-   - Ensure proper SMTP configuration
+## 🤝 Contributing
 
-## Contributing
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit changes: `git commit -m 'feat: add my feature'`
+4. Push and open a Pull Request
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is developed for academic and educational purposes.
 
-## Acknowledgments
+---
 
-- OpenCV team for computer vision capabilities
-- face_recognition library developers
-- Python community for various dependencies
+*SmartAttend AI — Automating attendance, one face at a time.*

@@ -1,0 +1,49 @@
+# ============================================================
+# SmartAttend AI - Python Dependencies
+# ============================================================
+# Compatible with Python 3.10+ (tested on 3.13)
+# CPU-only setup — no GPU required (Intel i5 / 16GB RAM)
+# ============================================================
+
+# --- Web Framework ---
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+
+# --- Database ---
+motor>=3.4.0           # Async MongoDB driver
+pymongo>=4.7.0         # Sync MongoDB driver (used by motor)
+
+# --- Pydantic (settings + schemas) ---
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+
+# --- Authentication ---
+python-jose[cryptography]>=3.3.0   # JWT encoding/decoding
+PyJWT>=2.8.0                       # Alternate JWT utility
+cryptography>=42.0.0               # AES/Fernet biometric encryption
+bcrypt>=4.1.0                      # Password hashing (alternative)
+passlib[bcrypt]>=1.7.4             # Password hashing abstraction
+
+# --- Computer Vision & AI ---
+opencv-python>=4.9.0               # Face detection & tracking
+numpy>=1.26.0                      # Numerical processing
+insightface>=0.7.3                 # ArcFace face recognition (CPU mode)
+onnxruntime>=1.17.0                # ONNX model runtime (CPU)
+scikit-learn>=1.4.0                # ML: anomaly detection, predictions
+
+# --- Data Processing ---
+pandas>=2.2.0                      # Data analysis
+openpyxl>=3.1.0                   # Excel report generation
+reportlab>=4.1.0                   # PDF report generation
+
+# --- HTTP & Async ---
+httpx>=0.27.0                      # Async HTTP client (for tests)
+python-multipart>=0.0.9            # File upload support
+
+# --- System Utilities ---
+psutil>=5.9.0                      # CPU / memory monitoring
+python-dotenv>=1.0.0               # .env file loading
+
+# --- Testing ---
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
